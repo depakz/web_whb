@@ -2,22 +2,34 @@ services:
   - type: web
     name: evolution-api
     runtime: docker
-    # Add these two lines to point to your folder
     dockerContext: evolution-api
-    dockerfilePath: evolution-api/Dockerfile
+    dockerfilePath: Dockerfile
+    plan: free
+    port: 8080
+    healthCheckPath: /health
     envVars:
       - key: AUTHENTICATION_API_KEY
         sync: false 
+
+      # --- MANDATORY DATABASE CONFIGS ---
       - key: DATABASE_ENABLED
         value: "true"
+      
+      # We provide all 3 common naming conventions used by different versions
+      - key: DATABASE_PROVIDER
+        value: postgresql
       - key: DATABASE_TYPE
-        value: "postgres"
+        value: postgres
       - key: DATABASE_CONNECTION_CLIENT
-        value: "postgres"
+        value: postgres
+
+      # The connection link from your Render Database
       - key: DATABASE_CONNECTION_URI
         fromDatabase:
           name: evolution-db
           property: connectionString
+
+      # --- CACHE CONFIGS ---
       - key: CACHE_REDIS_ENABLED
         value: "true"
       - key: CACHE_REDIS_URI
