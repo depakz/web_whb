@@ -5,9 +5,6 @@ services:
     # Add these two lines to point to your folder
     dockerContext: evolution-api
     dockerfilePath: evolution-api/Dockerfile
-    plan: free
-    port: 8080
-    healthCheckPath: /health
     envVars:
       - key: AUTHENTICATION_API_KEY
         sync: false 
