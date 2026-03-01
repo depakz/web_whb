@@ -2,11 +2,15 @@ services:
   - type: web
     name: evolution-api
     runtime: docker
+    # Add these two lines to point to your folder
+    dockerContext: evolution-api
+    dockerfilePath: evolution-api/Dockerfile
     plan: free
-    # Evolution API default port
+    port: 8080
+    healthCheckPath: /health
     envVars:
       - key: AUTHENTICATION_API_KEY
-        sync: false # You will be prompted for this in the Render Dashboard
+        sync: false 
       - key: DATABASE_ENABLED
         value: "true"
       - key: DATABASE_CONNECTION_URI
@@ -16,14 +20,12 @@ services:
       - key: CACHE_REDIS_ENABLED
         value: "true"
       - key: CACHE_REDIS_URI
-        # Using the internal service name as the host
         value: redis://evolution-redis:6379
 
-  # Redis defined as a service type for compatibility
   - type: redis
     name: evolution-redis
     plan: free
-    ipAllowList: [] # Allows internal traffic only
+    ipAllowList: []
 
 databases:
   - name: evolution-db
