@@ -15,7 +15,7 @@ services:
       - key: CACHE_REDIS_ENABLED
         value: "true"
       - key: CACHE_REDIS_URI
-        fromKeyValue: # Updated to match the new keyValue field
+        fromRedis: 
           name: evolution-redis
           property: connectionString
 
@@ -23,7 +23,6 @@ databases:
   - name: evolution-db
     plan: free
 
-# FIXED SECTION
-keyValue: 
+redises: 
   - name: evolution-redis
     plan: free
