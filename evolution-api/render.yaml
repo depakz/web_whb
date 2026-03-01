@@ -10,6 +10,8 @@ services:
         sync: false 
       - key: DATABASE_ENABLED
         value: "true"
+      - key: DATABASE_CONNECTION_CLIENT
+        value: "postgres"
       - key: DATABASE_CONNECTION_URI
         fromDatabase:
           name: evolution-db
