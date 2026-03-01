@@ -3,9 +3,12 @@ services:
     name: evolution-api
     runtime: docker
     plan: free
+    # Evolution API default port
+    port: 8080
+    healthCheckPath: /health
     envVars:
       - key: AUTHENTICATION_API_KEY
-        sync: false # Prompts you for the key during deploy
+        sync: false # You will be prompted for this in the Render Dashboard
       - key: DATABASE_ENABLED
         value: "true"
       - key: DATABASE_CONNECTION_URI
@@ -15,14 +18,15 @@ services:
       - key: CACHE_REDIS_ENABLED
         value: "true"
       - key: CACHE_REDIS_URI
-        fromRedis: 
-          name: evolution-redis
-          property: connectionString
+        # Using the internal service name as the host
+        value: redis://evolution-redis:6379
+
+  # Redis defined as a service type for compatibility
+  - type: redis
+    name: evolution-redis
+    plan: free
+    ipAllowList: [] # Allows internal traffic only
 
 databases:
   - name: evolution-db
-    plan: free
-
-redis: 
-  - name: evolution-redis
     plan: free
