@@ -4,8 +4,6 @@ services:
     runtime: docker
     plan: free
     # Evolution API default port
-    port: 8080
-    healthCheckPath: /health
     envVars:
       - key: AUTHENTICATION_API_KEY
         sync: false # You will be prompted for this in the Render Dashboard
