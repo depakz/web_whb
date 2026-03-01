@@ -1,11 +1,11 @@
 services:
   - type: web
     name: evolution-api
-    runtime: docker # This repo is best run as a Docker container
+    runtime: docker
     plan: free
     envVars:
       - key: AUTHENTICATION_API_KEY
-        value: your_secret_key_123 # Change this!
+        sync: false # Prompts you for the key during deploy
       - key: DATABASE_ENABLED
         value: "true"
       - key: DATABASE_CONNECTION_URI
@@ -15,7 +15,7 @@ services:
       - key: CACHE_REDIS_ENABLED
         value: "true"
       - key: CACHE_REDIS_URI
-        fromKeyValue:
+        fromKeyValue: # Updated to match the new keyValue field
           name: evolution-redis
           property: connectionString
 
@@ -23,6 +23,7 @@ databases:
   - name: evolution-db
     plan: free
 
-keyvalues:
+# FIXED SECTION
+keyValue: 
   - name: evolution-redis
     plan: free
